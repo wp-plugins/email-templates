@@ -4,28 +4,30 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: email templates, email template, html email, email template, template, better emails, wp better emails, wp email templates
 Requires at least: 4.0
 Tested up to: 4.2.2
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Send beautiful emails with the WordPress Email Templates plugin
 == Description ==
 
-Send beautiful emails with the WordPress Email Templates plugin. Choose one template, add a logo, change colors, add some footer text and start sending nice emails in WordPress
+Send beautiful emails with the WordPress Email Templates plugin. Choose your template style, add a logo or some text, change colors, edit footer and start sending nice emails in WordPress.
+
+Email Template plugin uses Customizer to make it easier. Preview your changes or send a test email with just a few clicks.
 
 = Requires WordPress 4.0.0 =
 
-=Help with translations= - [https://www.transifex.com/projects/p/wp-email-templates/](https://www.transifex.com/projects/p/wp-email-templates/)
+= Help with translations = - [https://www.transifex.com/projects/p/wp-email-templates/](https://www.transifex.com/projects/p/wp-email-templates/)
 
-Collaborate in Github - [https://github.com/timersys/wordpress-email-templates](https://github.com/timersys/wordpress-email-templates)
+= Collaborate in Github = - [https://github.com/timersys/wordpress-email-templates](https://github.com/timersys/wordpress-email-templates)
 
-* Thanks to @elioribero for sharing some customizer tips for plugins :)
+* Thanks to @eliorivero for sharing some customizer tips for plugins :)
 
 == Installation ==
 
 1. Upload the plugin in /wp-admin/plugin-install.php
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Click on Email Templates to start editing
+3. Click on Appearance -> "Email Templates" to start editing
 
 == Screenshots ==
 
@@ -35,5 +37,14 @@ Collaborate in Github - [https://github.com/timersys/wordpress-email-templates](
 
 == Changelog ==
 
+= 1.0.1 =
+
+* Bug - Template is cached to avoid issues when sending multiple emails
+* Added fallback text email for non html email clients and to improve inbox hits
+* Added site url to the logo/text logo in header
+* Fixed some typos in descriptions
+* Added Emails templates menu using add_submenu_page
+
+
 = 1.0 =
-* First realease
+* First release
