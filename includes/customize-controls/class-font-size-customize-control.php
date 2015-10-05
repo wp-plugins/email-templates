@@ -1,6 +1,6 @@
 <?php
-class WP_Send_Mail_Customize_Control extends WP_Customize_Control {
-	public $type = 'mailtpl_send_mail';
+class WP_Font_Size_Customize_Control extends WP_Customize_Control {
+	public $type = 'mailtpl_font_size';
 	/**
 	 * Render the control's content.
 	 */
@@ -10,9 +10,9 @@ class WP_Send_Mail_Customize_Control extends WP_Customize_Control {
 
 		?><li id="<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( $class ); ?>">
 			<label>
-				<button class="button button-primary " id="mailtpl-send_mail" tabindex="0"><?php _e( 'Send', 'mailtpl' ); ?></button>
-				<img id="mailtpl-spinner" src="<?php echo admin_url('images/spinner.gif');?>" alt="" style="display:none;"/>
-				<span id="mailtpl-success" style="display:none;"><?php _e( 'Email sent!', 'mailtpl');?></span>
+				<span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
+				<div class="font_value"><?php echo esc_attr( $this->value() ); ?></div>
+				<input <?php $this->link(); ?> type="range" min="1" max="100" step="1" value="<?php echo esc_attr( $this->value() ); ?>" class="mailtpl_range" />
 				<?php if ( ! empty( $this->description ) ) : ?>
 					<p><span class="description customize-control-description"><?php echo $this->description; ?></span></p>
 				<?php endif; ?>

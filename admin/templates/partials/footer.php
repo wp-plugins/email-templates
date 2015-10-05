@@ -22,7 +22,7 @@ $credit = "
 	border:0;
 	color: ".$settings['footer_text_color'].";
 	font-family: Arial;
-	font-size:12px;
+	font-size: ".$settings['footer_text_size']."px;
 	line-height:125%;
 	text-align:".$settings['footer_aligment'].";
 ";
@@ -61,9 +61,9 @@ $credit = "
         </td>
     </tr>
             </table>
-			<?php $powered_link = $settings['footer_powered_by'] != 'off' ? 'block':'none';?>
-			<p id="powered" style="text-align: center;font-size: 11px;display: <?php echo $powered_link;?>">Powered by <a href="https://wp.timersys.com/email-templates/?utm_source=emails_template_plugin&utm_medium=powered_link&utm_campaign=Email%20Templates">Email Templates Plugin</a></p>
-
+			<?php if( $settings['footer_powered_by'] != 'off' ): ?>
+			    <p id="powered">Powered by <a href="https://wp.timersys.com/email-templates/?utm_source=emails_template_plugin&utm_medium=powered_link&utm_campaign=Email%20Templates">Email Templates Plugin</a></p>
+            <?php endif;?>
         </td>
     </tr>
 </table>

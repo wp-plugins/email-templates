@@ -40,14 +40,12 @@ $template_header = "
 	vertical-align:middle;
 ";
 $body_content = "
-	background-color: #fafafa;
-	-webkit-border-radius:$border_radius !important;
-	border-radius:6px !important;
+	background-color: ".$settings['email_body_bg'].";
 ";
 $body_content_inner = "
-	color: #888888;
+	color: ".$settings['body_text_color'].";
 	font-family:Arial;
-	font-size:14px;
+	font-size: ".$settings['body_text_size']."px;
 	line-height:150%;
 	text-align:left;
 ";
@@ -57,13 +55,15 @@ $header_content_h1 = "
 	padding: 28px 24px;
 	display:block;
 	font-family:Arial;
-	font-size:30px;
+	font-size: ".$settings['header_text_size']."px;
 	font-weight:bold;
 	text-align:".$settings['header_aligment'].";
 	line-height: 150%;
 ";
-
-
+$header_content_h1_a = "
+	color: ".$settings['header_text_color'].";
+	text-decoration: none;
+";
 ?>
 
 <html>
@@ -83,14 +83,18 @@ $header_content_h1 = "
                                 	<table border="0" cellpadding="0" cellspacing="0" width="100%" id="template_header" style="<?php echo $template_header; ?>"">
                                         <tr>
                                             <td>
-                                            	<h1 style="<?php echo $header_content_h1; ?>" id="logo"><?php
+                                            	<h1 style="<?php echo $header_content_h1; ?>" id="logo">
+		                                            <a style="<?php echo $header_content_h1_a;?>" href="<?php echo apply_filters( 'mailtpl/templates/header_logo_url', home_url());?>" title="<?php echo apply_filters( 'mailtpl/templates/header_logo_url_title', get_bloginfo('name') );?>"><?php
 		                                            if( !empty($settings['header_logo']) ) {
 			                                            echo '<img src="'.apply_filters( 'mailtpl/templates/header_logo', $settings['header_logo'] ).'" alt="logo"/>';
 		                                            } elseif ( !empty( $settings['header_logo_text'] ) ) {
 														echo $settings['header_logo_text'];
 		                                            } else {
 														echo get_bloginfo('name');
-		                                            }  ?></h1>
+		                                            }  ?>
+		                                            </a>
+	                                            </h1>
+
                                             </td>
                                         </tr>
                                     </table>
@@ -102,9 +106,9 @@ $header_content_h1 = "
                                     <!-- Body -->
                                 	<table border="0" cellpadding="0" cellspacing="0" width="100%" id="template_body">
                                     	<tr>
-                                            <td valign="top" style="<?php echo $body_content; ?>">
+                                            <td valign="top" style="<?php echo $body_content; ?>" id="mailtpl_body_bg">
                                                 <!-- Content -->
                                                 <table border="0" cellpadding="20" cellspacing="0" width="100%">
                                                     <tr>
                                                         <td valign="top">
-                                                            <div style="<?php echo $body_content_inner; ?>">
+                                                            <div style="<?php echo $body_content_inner; ?>" id="mailtpl_body">

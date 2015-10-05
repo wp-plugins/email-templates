@@ -31,6 +31,12 @@ class Mailtpl_Mailer {
 	private $version;
 
 	/**
+	 *
+	 * @var string  $template Cached version of the template
+	 */
+	private $template = false;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -60,9 +66,10 @@ class Mailtpl_Mailer {
 	 * @since 1.0.0
 	 * @param object $phpmailer
 	 */
-	function send_email( $phpmailer ) {
+	function send_email( &$phpmailer ) {
 
 		$message            =  $this->add_template( apply_filters( 'mailtpl/email_content', $phpmailer->Body ) );
+		$phpmailer->AltBody =  $this->replace_placeholders( strip_tags($phpmailer->Body) );
 		$phpmailer->Body    =  $this->replace_placeholders( $message );
 
 	}
@@ -74,9 +81,25 @@ class Mailtpl_Mailer {
 	 * @return Array
 	 */
 	public function send_email_mandrill( $message ) {
-		$message            =  $this->add_template( apply_filters( 'mailtpl/email_content', $message['html'] ) );
-		$message['html']    =  $this->replace_placeholders( $message );
+		$temp_message       =  $this->add_template( apply_filters( 'mailtpl/email_content', $message['html'] ) );
+		$message['html']    =  $this->replace_placeholders( $temp_message );
 		return $message;
+	}
+
+	/**
+	 * Postman Compatibility
+	 *
+	 * @param $args
+	 *
+	 * @return Array
+	 *
+	 */
+	public function send_email_postman( $args ) {
+		if( !class_exists('Postman') )
+			return $args;
+		$temp_message       =  $this->add_template( apply_filters( 'mailtpl/email_content', $args['message'] ) );
+		$args['message']    =  $this->replace_placeholders( $temp_message );
+		return $args;
 	}
 
 	/**
@@ -102,12 +125,15 @@ class Mailtpl_Mailer {
 	 * @return string
 	 */
 	private function add_template( $email ) {
-		$template = apply_filters( 'mailtpl/customizer_template', MAILTPL_PLUGIN_DIR . "/admin/templates/default.php");
+		if( $this->template )
+			return str_replace( '%%MAILCONTENT%%', $email, $this->template );
+
+		$template_file = apply_filters( 'mailtpl/customizer_template', MAILTPL_PLUGIN_DIR . "/admin/templates/default.php");
 		ob_start();
-		include_once( $template );
-		$template = ob_get_contents();
+		include_once( $template_file );
+		$this->template = ob_get_contents();
 		ob_end_clean();
-		return str_replace( '%%MAILCONTENT%%', $email, $template );
+		return str_replace( '%%MAILCONTENT%%', $email, $this->template );
 	}
 
 	/**
@@ -152,6 +178,16 @@ class Mailtpl_Mailer {
 	 */
 	public function set_from_name(){
 		return $this->opts['from_name'];
+	}
+
+	/**
+	 * Clear retrieve password message for wrong html tag
+	 * @param $message
+	 *
+	 * @return mixed
+	 */
+	public function clean_retrieve_password( $message ) {
+		return preg_replace( '@<(http[^> ]+)>@', '$1', $message );
 	}
 
 }
