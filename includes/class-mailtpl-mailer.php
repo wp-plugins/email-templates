@@ -81,9 +81,25 @@ class Mailtpl_Mailer {
 	 * @return Array
 	 */
 	public function send_email_mandrill( $message ) {
-		$message            =  $this->add_template( apply_filters( 'mailtpl/email_content', $message['html'] ) );
-		$message['html']    =  $this->replace_placeholders( $message );
+		$temp_message       =  $this->add_template( apply_filters( 'mailtpl/email_content', $message['html'] ) );
+		$message['html']    =  $this->replace_placeholders( $temp_message );
 		return $message;
+	}
+
+	/**
+	 * Postman Compatibility
+	 *
+	 * @param $args
+	 *
+	 * @return Array
+	 *
+	 */
+	public function send_email_postman( $args ) {
+		if( !class_exists('Postman') )
+			return $args;
+		$temp_message       =  $this->add_template( apply_filters( 'mailtpl/email_content', $args['message'] ) );
+		$args['message']    =  $this->replace_placeholders( $temp_message );
+		return $args;
 	}
 
 	/**
@@ -162,6 +178,16 @@ class Mailtpl_Mailer {
 	 */
 	public function set_from_name(){
 		return $this->opts['from_name'];
+	}
+
+	/**
+	 * Clear retrieve password message for wrong html tag
+	 * @param $message
+	 *
+	 * @return mixed
+	 */
+	public function clean_retrieve_password( $message ) {
+		return preg_replace( '@<(http[^> ]+)>@', '$1', $message );
 	}
 
 }
